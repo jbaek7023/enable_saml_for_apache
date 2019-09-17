@@ -1,5 +1,7 @@
 FROM ubuntu:16.04
 
+ENV REMOTE_ADDR http://localhost:8080/simplesaml/saml2/idp/SSOService.php
+
 # Install services, packages and do cleanup
 RUN apt-get update
 RUN apt-get install -y apache2 libapache2-mod-auth-mellon libapache2-modsecurity
@@ -13,6 +15,7 @@ ADD modsecurity.conf /etc/modsecurity/
 
 # Modify the site (vhost) configuration
 # /etc/apache2/sites-enabled
+# COPY apache-conf /etc/apache2/apache2.conf
 COPY 000-default.conf /etc/apache2/sites-enabled/000-default.conf
 
 # Create SAML SP metadatta files (/etc/apache2/mellon/ > mellon_create_metadata.sh urn_myservicenname.cert urn_myservicenname.key urn_myservicenname.xml)
@@ -27,7 +30,7 @@ ADD urn_opengrok.xml /etc/apache2/mellon/
 ADD idp.xml /etc/apache2/mellon/
 
 # Copy files (EXTRA)
-# COPY apache-conf /etc/apache2/apache2.conf
+
 ADD index.html /var/www/html/
 ADD login.html /var/www/html/
 

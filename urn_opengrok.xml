@@ -22,6 +22,6 @@ nC2MzAt4DUs=</ds:X509Certificate>
       </ds:KeyInfo>
     </KeyDescriptor>
     <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://localhost:8446/secret/endpoint/logout"/>
-    <AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://localhost:8446/secret/endpoint/postResponse" index="0"/>
+    <AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://localhost:8446/secret/endpoint/postResponse" index="0" isDefault="true"/>
   </SPSSODescriptor>
 </EntityDescriptor>
