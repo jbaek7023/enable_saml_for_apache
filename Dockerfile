@@ -24,10 +24,8 @@ ADD mellon_create_metadata.sh /etc/apache2/mellon/
 
 # Move Certs and Metadatas
 # bash mellon_create_metadata.sh urn:myservicenname https://<YOURDOMAIN>/secret/endpoint
-ADD urn_opengrok.cert /etc/apache2/mellon/
-ADD urn_opengrok.key /etc/apache2/mellon/
-ADD urn_opengrok.xml /etc/apache2/mellon/
-ADD idp.xml /etc/apache2/mellon/
+
+ADD sp_certs /etc/apache2/mellon/
 
 # Copy files (EXTRA)
 
