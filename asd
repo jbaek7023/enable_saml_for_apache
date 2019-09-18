@@ -1,0 +1,9 @@
+MellonVariable "cookie"
+MellonSamlResponseDump On
+MellonSPPrivateKeyFile /etc/apache2/mellon/urn_opengrok.key
+MellonSPCertFile /etc/apache2/mellon/urn_opengrok.cert
+MellonSPMetadataFile /etc/apache2/mellon/urn_opengrok.xml
+MellonIdpMetadataFile /etc/apache2/mellon/idp.xml
+MellonEndpointPath /sdf.html
+MellonUser "NAME_ID"
+ProxyPassInterpolateEnv On

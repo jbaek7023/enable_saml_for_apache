@@ -30,6 +30,7 @@ ADD sp_certs /etc/apache2/mellon/
 # Copy files (EXTRA)
 
 ADD index.html /var/www/html/
+ADD sdf.html /var/www/html/
 ADD login.html /var/www/html/
 
 # Expose Apache
