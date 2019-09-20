@@ -1,0 +1,24 @@
+{
+  "name": "aop-sp",
+  "version": "1.0.0",
+  "description": "Art of Possible Service Provider",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "John Baek",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect-ensure-login": "^0.1.1",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "http-proxy": "^1.18.0",
+    "passport": "^0.4.0",
+    "passport-saml": "^1.1.0"
+  },
+  "devDependencies": {
+    "http-proxy-middleware": "^0.20.0"
+  }
+}
