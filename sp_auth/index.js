@@ -1,6 +1,6 @@
 var express = require("express");
 var session = require('express-session');
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var passport = require('passport');
 var saml = require('passport-saml');
@@ -15,7 +15,7 @@ var apiProxy = httpProxy.createProxyServer();
 var serviceProvider = 'http://localhost:8080';
 
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
 passport.serializeUser(function(user, done) {
@@ -64,7 +64,7 @@ var samlStrategy = new saml.Strategy({
     identifierFormat: null,
     decryptionPvk: fs.readFileSync(__dirname + '/certs/key.pem', 'utf8'),
     privateCert: fs.readFileSync(__dirname + '/certs/key.pem', 'utf8'),
-    validateInResponseTo: false,
+    validateInResponseTo: true,
     disableRequestedAuthnContext: false,
 }, function(profile, done) {
     return done(null, profile);
@@ -81,47 +81,42 @@ app.use(session({
 ));
 
 app.get('/',
-    passport.authenticate('samlStrategy'),
     function(req, res) {
         apiProxy.web(req, res, {target: serviceProvider});
     }
 );
 
-// Ensure Authentication Here!
-app.get('/source*', passport.authenticate('samlStrategy')(req, res, next),
+app.get('/source*',
     function(req, res, next) {
-        apiProxy.web(req, res, {target: serviceProvider});
-    }
-
-// function(req, res, next) {
-    // req.originalUrl = req.session.returnTo
-    // var redirectUrl = req.headers.referer || req.originalUrl || req.url;
-    // console.log('========');
-    // console.log(req.query.RelayState);
-    // console.log('%%%%%%%%%')
-    // if(!req.body.RelayParams) {
-    //     req.session.redirectTo = req.url;
-    //     req.query.RelayState = req.url;
-    //     // passport.authenticate('samlStrategy', {
-    //     //     additionalParams: { RelayState: req.url},
-    //     //     failureRedirect: '/loginFailed'
-    //     // })(req, res, next);
-
-    // } else {
-    // }
+        req.query.RelayState = req.url;
+        console.log('come back to source plz?')
+        console.log(req.user)
+        if(req.user) {
+            console.log('proxy...');
+            apiProxy.web(req, res, {target: serviceProvider});
+            console.log('req.user');
+        } else {
+            console.log('authenticating...');
+            passport.authenticate('samlStrategy')(req, res, next);
+        }
+    },
 );
 
 app.post('/login/callback',
 // Doesn't know the previous UrL
 // Update: Got the previous UrL via Session. Can't interrupt SAML session (security)
     function (req, res, next) {
-        console.log(req.body.RelayState)
-        // passport.authenticate('samlStrategy')(req, res, next);
-        var redirectTo = req.session.redirectTo || '/';
-        // delete req.session.redirectTo;
-        // res.redirect(req.body.RelayState);
-        apiProxy.web(req, res, {target: serviceProvider});
+        console.log('-----------------------------');
+        console.log('/Start login callback ');
+        next();
     },
+    passport.authenticate('samlStrategy'),
+    function(req, res, next) {
+        // Therefore we set the URL here.
+        console.log('after login/callback/authentication');
+        req.headers['serviceDelivery'] = 'awesome';
+        res.redirect(req.body.RelayState);
+    }
 );
 
 app.get('/metadata',
@@ -129,8 +124,8 @@ app.get('/metadata',
         res.type('application/xml');
         res.status(200).send(
             samlStrategy.generateServiceProviderMetadata(
-            fs.readFileSync(__dirname + '/certs/cert.pem', 'utf8'),
-            fs.readFileSync(__dirname + '/certs/cert.pem', 'utf8')
+                fs.readFileSync(__dirname + '/certs/cert.pem', 'utf8'),
+                fs.readFileSync(__dirname + '/certs/cert.pem', 'utf8')
             )
         );
     }
