@@ -29,7 +29,7 @@ passport.deserializeUser(function(user, done) {
 var samlStrategy = new saml.Strategy({
   // config options here
     callbackUrl: 'http://localhost/login/callback',
-    entryPoint: 'http://localhost:8080/simplesaml/saml2/idp/SSOService.php',
+    entryPoint: 'http://localhost:8380/simplesaml/saml2/idp/SSOService.php',
     issuer: 'saml-poc',
     identifierFormat: null,
     decryptionPvk: fs.readFileSync(__dirname + '/certs/key.pem', 'utf8'),

@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-ENV REMOTE_ADDR http://localhost:8080/simplesaml/saml2/idp/SSOService.php
+ENV REMOTE_ADDR http://localhost:8380/simplesaml/saml2/idp/SSOService.php
 
 # Install services, packages and do cleanup
 RUN apt-get update

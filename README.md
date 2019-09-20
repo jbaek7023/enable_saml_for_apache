@@ -15,16 +15,16 @@ $ docker run --name=testsamlidp -p 8080:8080 -p 8443:8443 -e SIMPLESAMLPHP_SP_EN
 
 1. Run SP container
 ```bash
-$ docker build -t opengrok . && docker run -it -p 8446:80 opengrok
+$ docker build -t sp . && docker run -it -p 8446:80 sp
 ```
 
 ## Test SP in Mock IdP.
 
-1. Open `localhost:8446` on your browser. 
+1. Open `localhost:8446` on your browser.
 2. Go to `localhost:8446/secret/endpoint`
-3. You will be redirected to IdP (port 8080)
+3. You will be redirected to IdP (port 8380)
 5. Username/Passwords are `user1`/`user1pass`
-6. You will be redirected to SP - This means your SAML/SSO is working. 
+6. You will be redirected to SP - This means your SAML/SSO is working.
 
 ## Test CodeSearch Integration
 
