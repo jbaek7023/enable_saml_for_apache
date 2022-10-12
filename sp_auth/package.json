@@ -16,7 +16,7 @@
     "express-session": "^1.16.2",
     "http-proxy": "^1.18.0",
     "passport": "^0.4.0",
-    "passport-saml": "^1.1.0"
+    "passport-saml": "^3.2.2"
   },
   "devDependencies": {
     "http-proxy-middleware": "^0.20.0"
